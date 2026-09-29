@@ -343,7 +343,7 @@ _RETRY_MAP = [
     ("At most 1 full quality session", "Keep only one threshold/interval/race_pace day; change any other quality day to easy."),
     ("Readiness is low", "Change the quality session to an easy run with strides; do not remove the speed touch entirely."),
     ("At least one speed session is required", "Add strides (set strides: true) on one existing easy day. Do not add a new day."),
-    ("Plan 3-5 runs this week", "Keep the number of running days (excluding rest/cross) between 3 and 5."),
+    ("Plan 3-6 runs this week", "Keep the number of running days (excluding rest/cross) between 3 and 6."),
     ("exactly 7 entries", "Return exactly 7 entries, one per day, in order Mon, Tue, Wed, Thu, Fri, Sat, Sun."),
 ]
 
