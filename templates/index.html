@@ -1,0 +1,1004 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Weekly Training Plan</title>
+    <style>
+      /* ── Tokens ─────────────────────────────────────────────── */
+      :root {
+        --bg: #0d1117;
+        --surface: #161b22;
+        --surface2: #1e2530;
+        --border: #30363d;
+        --accent: #2563eb;
+        --accent-dim: #1e4fc2;
+        --green: #22c55e;
+        --orange: #f97316;
+        --red: #ef4444;
+        --purple: #a855f7;
+        --yellow: #eab308;
+        --teal: #14b8a6;
+        --text: #e6edf3;
+        --text-muted: #7d8590;
+        --text-dim: #484f58;
+        --mono: ui-monospace, SFMono-Regular, Menlo, monospace;
+        --radius: 10px;
+        --radius-sm: 6px;
+      }
+
+      /* ── Reset & base ───────────────────────────────────────── */
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        line-height: 1.5;
+        min-height: 100vh;
+      }
+
+      a {
+        color: var(--accent);
+      }
+
+      /* ── Layout ─────────────────────────────────────────────── */
+      .page {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 0 1.25rem 4rem;
+      }
+
+      /* ── Header ─────────────────────────────────────────────── */
+      .header {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 1.5rem 0 1.25rem;
+        border-bottom: 1px solid var(--border);
+        margin-bottom: 1.75rem;
+      }
+      .header-icon {
+        font-size: 1.6rem;
+        line-height: 1;
+      }
+      .header-text h1 {
+        font-size: 1.25rem;
+        font-weight: 700;
+        letter-spacing: -0.01em;
+        color: var(--text);
+      }
+      .header-text p {
+        font-size: 0.78rem;
+        color: var(--text-muted);
+        margin-top: 0.1rem;
+      }
+
+      /* ── Cards ──────────────────────────────────────────────── */
+      .card {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 1.25rem 1.5rem;
+        margin-bottom: 1.25rem;
+      }
+      .card-title {
+        font-size: 0.7rem;
+        font-weight: 600;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--text-muted);
+        margin-bottom: 1rem;
+      }
+
+      /* ── Alerts ─────────────────────────────────────────────── */
+      .alert {
+        display: flex;
+        gap: 0.75rem;
+        align-items: flex-start;
+        padding: 0.85rem 1.1rem;
+        border-radius: var(--radius-sm);
+        font-size: 0.9rem;
+        margin-bottom: 1rem;
+      }
+      .alert-warn {
+        background: #f97316 12%;
+        border: 1px solid #f9731640;
+        color: #fed7aa;
+      }
+      .alert-info {
+        background: #2563eb 10%;
+        border: 1px solid #2563eb40;
+        color: #bfdbfe;
+      }
+      .alert-ok {
+        background: #22c55e 10%;
+        border: 1px solid #22c55e40;
+        color: #bbf7d0;
+      }
+      .alert-icon {
+        font-size: 1rem;
+        flex-shrink: 0;
+        margin-top: 0.05rem;
+      }
+      .alert code {
+        font-family: var(--mono);
+        font-size: 0.82em;
+        background: #ffffff14;
+        padding: 0.1em 0.35em;
+        border-radius: 4px;
+      }
+
+      /* ── Form ───────────────────────────────────────────────── */
+      .form-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+        gap: 1rem;
+      }
+      .form-group {
+        display: flex;
+        flex-direction: column;
+        gap: 0.35rem;
+      }
+      .form-group.full {
+        grid-column: 1 / -1;
+      }
+      .form-group.half {
+        grid-column: span 2;
+      }
+
+      label {
+        font-size: 0.75rem;
+        font-weight: 500;
+        color: var(--text-muted);
+        letter-spacing: 0.03em;
+      }
+
+      input,
+      textarea,
+      select {
+        background: var(--bg);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-sm);
+        color: var(--text);
+        font-family: inherit;
+        font-size: 0.92rem;
+        padding: 0.5rem 0.65rem;
+        width: 100%;
+        transition: border-color 0.15s;
+        outline: none;
+      }
+      input:focus,
+      textarea:focus {
+        border-color: var(--accent);
+        box-shadow: 0 0 0 3px #2563eb22;
+      }
+      input[type='number'] {
+        font-family: var(--mono);
+      }
+      textarea {
+        min-height: 3.5rem;
+        resize: vertical;
+      }
+
+      /* ── Buttons ────────────────────────────────────────────── */
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.45rem;
+        padding: 0.55rem 1.1rem;
+        border-radius: var(--radius-sm);
+        font-size: 0.9rem;
+        font-weight: 500;
+        cursor: pointer;
+        border: 1px solid transparent;
+        transition:
+          background 0.15s,
+          opacity 0.15s;
+        text-decoration: none;
+        white-space: nowrap;
+      }
+      .btn:disabled {
+        opacity: 0.55;
+        cursor: not-allowed;
+      }
+      .btn-primary {
+        background: var(--accent);
+        color: #fff;
+        border-color: var(--accent-dim);
+      }
+      .btn-primary:hover:not(:disabled) {
+        background: var(--accent-dim);
+      }
+      .btn-ghost {
+        background: transparent;
+        color: var(--text-muted);
+        border-color: var(--border);
+      }
+      .btn-ghost:hover {
+        background: var(--surface2);
+        color: var(--text);
+      }
+      .btn-green {
+        background: #16a34a;
+        color: #fff;
+        border-color: #15803d;
+      }
+      .btn-green:hover:not(:disabled) {
+        background: #15803d;
+      }
+
+      .btn-row {
+        display: flex;
+        gap: 0.65rem;
+        align-items: center;
+        flex-wrap: wrap;
+        margin-top: 1.1rem;
+      }
+
+      /* ── Progress / terminal ────────────────────────────────── */
+      .progress-header {
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+        margin-bottom: 0.6rem;
+      }
+      .spinner {
+        width: 0.9rem;
+        height: 0.9rem;
+        border: 2px solid #2563eb33;
+        border-top-color: var(--accent);
+        border-radius: 50%;
+        animation: spin 0.75s linear infinite;
+        flex-shrink: 0;
+      }
+      #progress-title {
+        font-size: 0.88rem;
+        font-weight: 600;
+        color: var(--text-muted);
+      }
+      #progress-log {
+        background: #010409;
+        border: 1px solid var(--border);
+        border-radius: var(--radius-sm);
+        color: #3fb950;
+        font-family: var(--mono);
+        font-size: 0.8rem;
+        line-height: 1.6;
+        min-height: 4rem;
+        max-height: 16rem;
+        overflow-y: auto;
+        padding: 0.75rem 1rem;
+        white-space: pre-wrap;
+      }
+
+      /* ── Plan section ───────────────────────────────────────── */
+      .plan-header {
+        display: flex;
+        align-items: baseline;
+        gap: 0.75rem;
+        flex-wrap: wrap;
+        margin-bottom: 0.5rem;
+      }
+      .plan-header h2 {
+        font-size: 1.1rem;
+        font-weight: 700;
+      }
+      .plan-meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin-bottom: 1.25rem;
+      }
+
+      /* ── Chips / badges ─────────────────────────────────────── */
+      .chip {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.3rem;
+        padding: 0.2rem 0.6rem;
+        border-radius: 999px;
+        font-size: 0.76rem;
+        font-weight: 500;
+        background: var(--surface2);
+        border: 1px solid var(--border);
+        color: var(--text-muted);
+        font-family: var(--mono);
+      }
+      .chip-label {
+        font-family: inherit;
+        font-size: 0.72rem;
+        color: var(--text-dim);
+        margin-right: 0.1rem;
+      }
+
+      .badge {
+        display: inline-block;
+        padding: 0.15rem 0.55rem;
+        border-radius: 999px;
+        font-size: 0.72rem;
+        font-weight: 600;
+        letter-spacing: 0.03em;
+        text-transform: uppercase;
+      }
+      /* type badges */
+      .badge-easy {
+        background: #16a34a22;
+        color: var(--green);
+        border: 1px solid #16a34a55;
+      }
+      .badge-long {
+        background: #7c3aed22;
+        color: var(--purple);
+        border: 1px solid #7c3aed55;
+      }
+      .badge-threshold {
+        background: #ea580c22;
+        color: var(--orange);
+        border: 1px solid #ea580c55;
+      }
+      .badge-interval {
+        background: #dc262622;
+        color: var(--red);
+        border: 1px solid #dc262655;
+      }
+      .badge-race_pace {
+        background: #0891b222;
+        color: #22d3ee;
+        border: 1px solid #0891b255;
+      }
+      .badge-fartlek {
+        background: #d9770622;
+        color: #fb923c;
+        border: 1px solid #d9770655;
+      }
+      .badge-rest {
+        background: #37415122;
+        color: var(--text-dim);
+        border: 1px solid #37415155;
+      }
+      .badge-cross {
+        background: #0f766e22;
+        color: var(--teal);
+        border: 1px solid #0f766e55;
+      }
+      .badge-race {
+        background: #9333ea22;
+        color: #c084fc;
+        border: 1px solid #9333ea55;
+      }
+      .badge-phase {
+        background: #2563eb18;
+        color: #93c5fd;
+        border: 1px solid #2563eb44;
+        font-size: 0.7rem;
+      }
+
+      /* readiness */
+      .badge-good {
+        background: #16a34a20;
+        color: var(--green);
+        border: 1px solid #16a34a44;
+      }
+      .badge-moderate {
+        background: #d9770620;
+        color: var(--orange);
+        border: 1px solid #d9770644;
+      }
+      .badge-low {
+        background: #dc262620;
+        color: var(--red);
+        border: 1px solid #dc262644;
+      }
+
+      /* ── 7-day plan grid ────────────────────────────────────── */
+      .week-grid {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        gap: 0.6rem;
+        margin: 0.5rem 0 1.25rem;
+      }
+      @media (max-width: 680px) {
+        .week-grid {
+          grid-template-columns: repeat(4, 1fr);
+        }
+      }
+      @media (max-width: 440px) {
+        .week-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+
+      .day-card {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 0.75rem 0.7rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.35rem;
+        transition: border-color 0.15s;
+      }
+      .day-card:hover {
+        border-color: #484f58;
+      }
+      .day-card.is-rest {
+        opacity: 0.55;
+      }
+
+      .day-name {
+        font-size: 0.7rem;
+        font-weight: 700;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: var(--text-muted);
+      }
+      .day-date {
+        font-size: 0.68rem;
+        color: var(--text-dim);
+        font-family: var(--mono);
+      }
+      .day-mins {
+        font-size: 1.1rem;
+        font-weight: 700;
+        font-family: var(--mono);
+        color: var(--text);
+        line-height: 1;
+      }
+      .day-mins span {
+        font-size: 0.7rem;
+        font-weight: 400;
+        color: var(--text-muted);
+      }
+      .day-km {
+        font-size: 0.72rem;
+        color: var(--text-muted);
+        font-family: var(--mono);
+      }
+      .day-details {
+        font-size: 0.72rem;
+        color: var(--text-muted);
+        line-height: 1.35;
+        margin-top: 0.15rem;
+      }
+      .day-strides {
+        font-size: 0.68rem;
+        color: var(--yellow);
+        margin-top: 0.1rem;
+      }
+      .day-work {
+        font-size: 0.68rem;
+        color: #7dd3fc;
+        font-family: var(--mono);
+      }
+
+      /* ── Summary bullets ────────────────────────────────────── */
+      .summary-list {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 0.45rem;
+      }
+      .summary-list li {
+        display: flex;
+        align-items: baseline;
+        gap: 0.5rem;
+        font-size: 0.88rem;
+        color: var(--text-muted);
+      }
+      .summary-list li::before {
+        content: '—';
+        color: var(--text-dim);
+        flex-shrink: 0;
+      }
+
+      /* ── Paces ───────────────────────────────────────────────── */
+      .pace-grid {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+      }
+      .pace-item {
+        background: var(--surface2);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-sm);
+        padding: 0.4rem 0.75rem;
+        font-size: 0.78rem;
+      }
+      .pace-item .pace-label {
+        color: var(--text-dim);
+        font-size: 0.68rem;
+        display: block;
+        margin-bottom: 0.1rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+      .pace-item .pace-value {
+        font-family: var(--mono);
+        color: var(--text);
+      }
+
+      /* ── Dose notes / warnings ──────────────────────────────── */
+      .dose-note {
+        font-size: 0.8rem;
+        color: var(--text-muted);
+        padding: 0.25rem 0;
+        border-bottom: 1px solid var(--border);
+      }
+      .dose-note:last-child {
+        border-bottom: none;
+      }
+
+      /* ── Details (JSON preview) ─────────────────────────────── */
+      details {
+        margin-top: 0.75rem;
+      }
+      details summary {
+        cursor: pointer;
+        font-size: 0.82rem;
+        color: var(--text-muted);
+        user-select: none;
+        padding: 0.3rem 0;
+      }
+      details summary:hover {
+        color: var(--text);
+      }
+      details pre {
+        margin-top: 0.5rem;
+        background: #010409;
+        border: 1px solid var(--border);
+        border-radius: var(--radius-sm);
+        color: #8b949e;
+        font-family: var(--mono);
+        font-size: 0.78rem;
+        max-height: 14rem;
+        overflow: auto;
+        padding: 0.75rem 1rem;
+      }
+
+      /* ── Divider ─────────────────────────────────────────────── */
+      .divider {
+        border: none;
+        border-top: 1px solid var(--border);
+        margin: 1.5rem 0;
+      }
+
+      /* ── Animations ──────────────────────────────────────────── */
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(6px);
+        }
+        to {
+          opacity: 1;
+          transform: none;
+        }
+      }
+      .fade-in {
+        animation: fadeIn 0.3s ease both;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <!-- ── Header ── -->
+      <header class="header">
+        <div class="header-icon">🏃</div>
+        <div class="header-text">
+          <h1>Weekly Training Plan</h1>
+          <p>Daniels + Garmin style &middot; Powered by Ollama</p>
+        </div>
+      </header>
+
+      <!-- ── Alerts ── -->
+      {% if creds_missing %}
+      <div class="alert alert-warn">
+        <span class="alert-icon">⚠️</span>
+        <span
+          >Set <code>INTERVALS_ATHLETE_ID</code> and
+          <code>INTERVALS_API_KEY</code> in a <code>.env</code> file next to
+          <code>app.py</code>, then restart the app.</span
+        >
+      </div>
+      {% endif %} {% for m in log %}
+      <div
+        class="alert {% if 'failed' in m.lower() or 'error' in m.lower() %}alert-warn{% elif 'saved' in m.lower() or 'submitted' in m.lower() or 'generated' in m.lower() %}alert-ok{% else %}alert-info{% endif %} fade-in"
+      >
+        <span class="alert-icon"
+          >{% if 'failed' in m.lower() or 'error' in m.lower() %}✗{% elif
+          'saved' in m.lower() or 'submitted' in m.lower() or 'generated' in
+          m.lower() %}✓{% else %}ℹ{% endif %}</span
+        >
+        <span>{{ m }}</span>
+      </div>
+      {% endfor %}
+
+      <!-- ── Settings form ── -->
+      <div class="card">
+        <div class="card-title">⚙ Race &amp; Fitness Settings</div>
+        <form method="post" action="{{ url_for('update_settings') }}">
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="race_date">Race date</label>
+              <input
+                type="date"
+                id="race_date"
+                name="race_date"
+                value="{{ settings.race_date }}"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="race_km">Race distance (km)</label>
+              <input
+                type="number"
+                id="race_km"
+                name="race_km"
+                value="{{ settings.race_km }}"
+                min="1"
+                step="0.1"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="goal_time">Goal time (mm:ss or h:mm:ss)</label>
+              <input
+                type="text"
+                id="goal_time"
+                name="goal_time"
+                value="{{ settings.goal_time }}"
+                pattern="\d{1,2}:\d{2}(:\d{2})?"
+                required
+              />
+            </div>
+            <!-- row break: forces next fields onto a new grid row -->
+            <div
+              style="grid-column: 1 / -1; margin: 0; padding: 0; height: 0"
+            ></div>
+            <div class="form-group half">
+              <label for="result_km">Latest test/race distance (km)</label>
+              <input
+                type="number"
+                id="result_km"
+                name="result_km"
+                value="{{ settings.result_km }}"
+                min="1"
+                step="0.1"
+                required
+              />
+            </div>
+            <div class="form-group half">
+              <label for="result_time"
+                >Latest test/race time (mm:ss or h:mm:ss)</label
+              >
+              <input
+                type="text"
+                id="result_time"
+                name="result_time"
+                value="{{ settings.result_time }}"
+                pattern="\d{1,2}:\d{2}(:\d{2})?"
+                required
+              />
+            </div>
+            <div class="form-group full">
+              <label for="sport_notes">Constraints &amp; notes</label>
+              <textarea id="sport_notes" name="sport_notes">
+{{ settings.sport_notes }}</textarea
+              >
+            </div>
+          </div>
+          <div class="btn-row">
+            <button type="submit" class="btn btn-ghost">
+              💾 Save settings
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <!-- ── Generate ── -->
+      <div id="gen-area">
+        <form method="post" action="{{ url_for('generate') }}" id="gen-form">
+          <div class="btn-row" style="margin-top: 0">
+            <button type="submit" class="btn btn-primary" id="gen-btn">
+              ⚡ Generate plan
+            </button>
+            <span style="font-size: 0.8rem; color: var(--text-muted)">
+              Fetches last 2 weeks from Intervals.icu → asks local model →
+              validates. Takes a few minutes on CPU.
+            </span>
+          </div>
+        </form>
+      </div>
+
+      <!-- ── Progress log (hidden until running) ── -->
+      <div id="progress-box" style="display: none" class="card fade-in">
+        <div class="progress-header">
+          <div class="spinner" id="spinner"></div>
+          <strong
+            id="progress-title"
+            style="font-size: 0.88rem; color: var(--text-muted)"
+            >Generating…</strong
+          >
+        </div>
+        <pre id="progress-log"></pre>
+      </div>
+
+      <!-- ── Plan result ── -->
+      {% if result %}
+      <hr class="divider" />
+      <div class="fade-in">
+        <!-- Plan header -->
+        <div class="plan-header">
+          <h2>Week of {{ result.plan_start }}</h2>
+          <span class="badge badge-phase">{{ result.phase_key }}</span>
+          <span style="font-size: 0.8rem; color: var(--text-muted)"
+            >{{ result.days_out }} days to race</span
+          >
+        </div>
+        <p
+          style="
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+          "
+        >
+          {{ result.phase_text }}
+        </p>
+
+        <!-- Stat chips -->
+        <div class="plan-meta">
+          <span class="chip"
+            ><span class="chip-label">VDOT</span>{{ result.vdot }}</span
+          >
+          <span class="chip"
+            ><span class="chip-label">Predicted</span>{{ result.predicted
+            }}</span
+          >
+          <span class="chip"
+            ><span class="chip-label">Goal VDOT</span>{{ result.goal_vdot
+            }}</span
+          >
+          <span class="chip badge-{{ result.readiness }}"
+            ><span class="chip-label">Readiness</span>{{ result.readiness }}{%
+            if result.readiness_flags %} · {{ result.readiness_flags | join(';
+            ') }}{% endif %}</span
+          >
+          {% if result.adherence_pct is not none %}
+          <span class="chip"
+            ><span class="chip-label">Adherence</span>{{ result.adherence_pct
+            }}%</span
+          >
+          {% endif %}
+        </div>
+
+        <!-- Warnings -->
+        {% if result.warnings %}
+        <div class="alert alert-warn" style="margin-bottom: 1rem">
+          <span class="alert-icon">⚠️</span>
+          <div>
+            <strong>Validator found issues — review before submitting:</strong>
+            <ul
+              style="
+                margin-top: 0.35rem;
+                padding-left: 1.1rem;
+                font-size: 0.85rem;
+              "
+            >
+              {% for w in result.warnings %}
+              <li>{{ w }}</li>
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+        {% endif %}
+
+        <!-- 7-day grid -->
+        <div class="card-title" style="margin-bottom: 0.5rem">📅 Next Week</div>
+        <div class="week-grid">
+          {% for d in result.plan %}
+          <div
+            class="day-card {% if d.type in ('rest','cross') %}is-rest{% endif %}"
+          >
+            <div>
+              <div class="day-name">{{ d.day }}</div>
+              <div class="day-date">{{ d.date[5:] }}</div>
+            </div>
+            <span class="badge badge-{{ d.type }}"
+              >{{ d.type | replace('_',' ') }}</span
+            >
+            {% if d.type not in ('rest', 'cross') %}
+            <div class="day-mins">{{ d.minutes }}<span> min</span></div>
+            {% if d.est_km %}
+            <div class="day-km">~{{ d.est_km }} km</div>
+            {% endif %} {% if d.work_minutes %}
+            <div class="day-work">{{ d.work_minutes }} min at pace</div>
+            {% endif %} {% if d.strides %}
+            <div class="day-strides">⚡ strides</div>
+            {% endif %} {% endif %}
+            <div class="day-details">{{ d.details }}</div>
+          </div>
+          {% endfor %}
+        </div>
+
+        <!-- Week totals -->
+        {% set ns = namespace(total_min=0, total_km=0) %} {% for d in
+        result.plan %} {% if d.type not in ('rest','cross') %} {% set
+        ns.total_min = ns.total_min + d.minutes %} {% set ns.total_km =
+        ns.total_km + d.est_km %} {% endif %} {% endfor %}
+        <p
+          style="
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            margin-bottom: 1.25rem;
+          "
+        >
+          Week total:
+          <strong style="color: var(--text); font-family: var(--mono)"
+            >{{ ns.total_min }} min</strong
+          >
+          &middot; ~<strong style="color: var(--text); font-family: var(--mono)"
+            >{{ "%.0f"|format(ns.total_km) }} km</strong
+          >
+          &emsp;|&emsp; Last week:
+          <span style="font-family: var(--mono)"
+            >{{ result.this_week.minutes }} min, {{ result.this_week.km }}
+            km</span
+          >
+        </p>
+
+        <!-- Summary bullets -->
+        <div class="card-title" style="margin-bottom: 0.5rem">
+          📝 Coach Summary
+        </div>
+        <ul class="summary-list" style="margin-bottom: 1.25rem">
+          {% for s in result.summary %}
+          <li>{{ s }}</li>
+          {% endfor %}
+        </ul>
+
+        <!-- Paces -->
+        <div class="card-title" style="margin-bottom: 0.5rem">
+          🎯 Training Paces
+        </div>
+        <div class="pace-grid" style="margin-bottom: 1.25rem">
+          {% for key, val in result.paces.items() %} {% if key != 'strides' %}
+          <div class="pace-item">
+            <span class="pace-label">{{ key | replace('_',' ') }}</span>
+            <span class="pace-value">{{ val }}</span>
+          </div>
+          {% endif %} {% endfor %}
+          <div class="pace-item">
+            <span class="pace-label">strides</span>
+            <span class="pace-value" style="font-size: 0.72rem"
+              >{{ result.paces.strides }}</span
+            >
+          </div>
+        </div>
+
+        <!-- Dose notes -->
+        {% if result.dose_notes %}
+        <div class="card" style="padding: 0.75rem 1rem; margin-bottom: 1rem">
+          <div class="card-title" style="margin-bottom: 0.5rem">
+            🔬 Dose notes (informational)
+          </div>
+          {% for n in result.dose_notes %}
+          <div class="dose-note">{{ n }}</div>
+          {% endfor %}
+        </div>
+        {% endif %}
+
+        <!-- Disclaimer -->
+        <p
+          style="
+            font-size: 0.78rem;
+            color: var(--text-dim);
+            margin-bottom: 1rem;
+          "
+        >
+          ⚠ Draft only — review carefully before following, especially for
+          injury risk.
+        </p>
+
+        <!-- JSON preview -->
+        <details>
+          <summary>
+            🔍 Preview payload ({{ events | length }} events to Intervals.icu)
+          </summary>
+          <pre>{{ events_json }}</pre>
+        </details>
+
+        <!-- Submit -->
+        <div class="btn-row" style="margin-top: 1.25rem">
+          <form
+            method="post"
+            action="{{ url_for('submit') }}"
+            onsubmit="return confirm('Submit {{ events | length }} workouts to Intervals.icu for the week of {{ result.plan_start }}?\n\nRe-submitting later will update these same events, not duplicate them.')"
+          >
+            <button type="submit" class="btn btn-green">
+              🚀 Submit to Intervals.icu
+            </button>
+          </form>
+        </div>
+      </div>
+      <!-- /.fade-in -->
+      {% endif %}
+    </div>
+    <!-- /.page -->
+
+    <script>
+      (function () {
+        var form = document.getElementById('gen-form');
+        var btn = document.getElementById('gen-btn');
+        var area = document.getElementById('gen-area');
+        var box = document.getElementById('progress-box');
+        var logEl = document.getElementById('progress-log');
+        var title = document.getElementById('progress-title');
+        var spinner = document.getElementById('spinner');
+
+        function startStream() {
+          area.style.display = 'none';
+          box.style.display = 'block';
+          var es = new EventSource('/stream');
+          es.onmessage = function (e) {
+            var msg = e.data;
+            if (msg === 'done') {
+              es.close();
+              spinner.style.display = 'none';
+              title.textContent = '✓ Done! Reloading…';
+              title.style.color = '#22c55e';
+              setTimeout(function () {
+                location.reload();
+              }, 800);
+            } else if (msg.startsWith('error:')) {
+              es.close();
+              spinner.style.display = 'none';
+              title.textContent = '✗ Generation failed';
+              title.style.color = '#ef4444';
+              logEl.textContent += '\n\nERROR: ' + msg.slice(6);
+              area.style.display = 'block';
+            } else if (msg.startsWith('log:')) {
+              logEl.textContent += msg.slice(4) + '\n';
+              logEl.scrollTop = logEl.scrollHeight;
+            }
+          };
+          es.onerror = function () {
+            es.close();
+            location.reload();
+          };
+        }
+
+        // Probe on page load: if generation is already running (after redirect), attach immediately.
+        var probe = new EventSource('/stream');
+        var settled = false;
+        probe.onmessage = function (e) {
+          if (settled) return;
+          settled = true;
+          probe.close();
+          if (e.data !== 'done') {
+            startStream();
+          }
+        };
+        probe.onerror = function () {
+          settled = true;
+          probe.close();
+        };
+
+        form.addEventListener('submit', function () {
+          btn.disabled = true;
+          btn.textContent = 'Starting…';
+        });
+      })();
+    </script>
+  </body>
+</html>

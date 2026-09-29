@@ -1,0 +1,6 @@
+.env
+settings.json
+plans/
+venv/
+__pycache__/
+*.pyc
