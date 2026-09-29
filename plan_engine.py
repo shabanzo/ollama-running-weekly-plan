@@ -296,8 +296,8 @@ def validate(plan, days_out, prev_minutes, ready_level, phase_key=None, prev_lon
         errs.append("At least one speed session is required (strides, fartlek, or a quality session).")
 
     runs = sum(t not in ("rest", "cross") for t in types)
-    if runs > 5 or runs < 3:
-        errs.append("Plan 3-5 runs this week.")
+    if runs > 6 or runs < 3:
+        errs.append("Plan 3-6 runs this week.")
     total = sum(d["minutes"] for d in plan if d["type"] not in ("rest", "cross"))
     if prev_minutes >= 60:
         if total > prev_minutes * 1.10 + 10:
